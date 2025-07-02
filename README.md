@@ -72,4 +72,12 @@ If you find this repository useful in your research, please consider citing the 
   journal={IEEE Transactions on Circuits and Systems for Video Technology},
   year={2025}
 }
+@article{zou2025semantic,
+  title={Semantic contextualization of face forgery: A new definition, dataset, and detection method},
+  author={Zou, Mian and Yu, Baosheng and Zhan, Yibing and Lyu, Siwei and Ma, Kede},
+  journal={IEEE Transactions on Information Forensics and Security},
+  year={2025},
+  pages={4512-4524},
+  vol={20}
+}
 ```
