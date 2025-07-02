@@ -38,6 +38,7 @@ Follow the links below to download the datasets (🛡️ Copyright of the datase
 
 |      Model       |    Training Dataset   |                                                        Download                                                                | |
 |:----------------:|:----------------:|:-------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------:|
+| SO-ViT-B | [FFSC](https://github.com/MZMMSEC/SO-DFD)  | [GitHub](https://github.com/MZMMSEC/SO-DFD) |✅|
 | SO-ViT-B | [FF++](https://github.com/ondyari/FaceForensics)  | [Google Drive]() |⬜|
 | SJEDD | [FF++](https://github.com/ondyari/FaceForensics)  | [Google Drive](https://drive.google.com/file/d/1iXDzFrH4o3h4C7HA2jZRoxoxFr3G2Vly/view?usp=sharing) |✅|
 | SJEDD | [FFSC](https://github.com/MZMMSEC/SO-DFD)  | [Google Drive]() |⬜|
