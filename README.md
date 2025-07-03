@@ -39,7 +39,6 @@ Follow the links below to download the datasets (🛡️ Copyright of the datase
 |      Model       |    Training Dataset   |                                                        Download                                                                | |
 |:----------------:|:----------------:|:-------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------:|
 | SJEDD | [FF++](https://github.com/ondyari/FaceForensics)  | [Google Drive](https://drive.google.com/file/d/1iXDzFrH4o3h4C7HA2jZRoxoxFr3G2Vly/view?usp=sharing) |✅|
-| SJEDD | [FFSC](https://github.com/MZMMSEC/SO-DFD)  | [Google Drive]() |⬜|
 
 After downloading these checkpoints, put them into the folder ``pretrained``.
 
