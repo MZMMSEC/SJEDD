@@ -13,7 +13,7 @@ from set_dataset_test import set_dataset_singleGPU_CDF, set_dataset_singleGPU_FS
     set_dataset_singleGPU_DFDC, MyDataset_FFSC, MyDataset_Diffusion
 from config_test import get_config
 from SO_Loss import pLoss_all_fidelity
-from SO_Graph import graph_SA_ffso
+from SO_Graph import graph_SA_ffso, graph_SO_FFSC
 from torch.cuda import amp
 import torchvision
 from torchvision.transforms import InterpolationMode
@@ -54,6 +54,7 @@ def parse_option():
     parser.add_argument('--datapath', type=str, default='/data0/mian2/celeb-df/dataset/', help='/data0/mian2/FaceShifter/, /data0/mian2/DeeperForensics/')
     parser.add_argument('--n_frames', type=int, default=32)
 
+    parser.add_argument('--train_dataset', type=str, default="ffpp", help='ffsc')
     parser.add_argument('--VM', type=str, default="ViT-B/32", help='RN50, RN101, ViT-B/16, ViT-L/14')
 
     args, unparsed = parser.parse_known_args()
@@ -68,15 +69,26 @@ def main(config, args):
     # ---------------------------------
     l1_level = ['fake']
 
-    l2_level = ['expression', 'identity', 'physical inconsistency']
+    if args.train_dataset == 'ffpp':
+        l2_level = ['expression', 'identity', 'physical inconsistency']
+        l3_level = ['eye', 'eyebrow', 'lip', 'mouth', 'nose', 'skin']
 
-    l3_level = ['eye', 'eyebrow', 'lip', 'mouth', 'nose', 'skin']
+    elif args.train_dataset == 'ffsc':
+        l2_level = ['age', 'expression', 'gender', 'identity', 'pose']
+        l3_level = ['eye', 'eyebrow', 'lip', 'mouth', 'nose', 'skin']
+
+    else:
+        raise NotImplementedError
 
     l1_texts = torch.cat([clip.tokenize(f"A photo of a {l1} face") for l1 in l1_level]).to('cuda').unsqueeze(0)
 
-    l2_texts = torch.cat([clip.tokenize(f"A photo of a face with the global attribute of {l2} altered") for l2 in l2_level]).to('cuda').unsqueeze(0)
+    l2_texts = torch.cat(
+        [clip.tokenize(f"A photo of a face with the global attribute of {l2} altered") for l2 in l2_level]).to(
+        'cuda').unsqueeze(0)
 
-    l3_texts = torch.cat([clip.tokenize(f"A photo of a face with the local attribute of {l3} altered") for l3 in l3_level]).to('cuda').unsqueeze(0)
+    l3_texts = torch.cat(
+        [clip.tokenize(f"A photo of a face with the local attribute of {l3} altered") for l3 in l3_level]).to(
+        'cuda').unsqueeze(0)
 
     joint_texts = [l1_texts, l2_texts, l3_texts]
 
@@ -91,7 +103,10 @@ def main(config, args):
     # -----------------------------------
     # define inference loss
     # -----------------------------------
-    criterion = pLoss_all_fidelity(hexG=graph_SA_ffso(), dataset='ffpp')
+    if args.train_dataset == 'ffpp':
+        criterion = pLoss_all_fidelity(hexG=graph_SA_ffso(), dataset='ffpp')
+    elif args.train_dataset == 'ffsc':
+        criterion = pLoss_all_fidelity(hexG=graph_SO_FFSC(), dataset='ffsc')
     # load the checkpoint, unless we use the pretrained CLIP weights
 
     # for test
