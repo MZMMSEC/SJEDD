@@ -4,7 +4,7 @@ from utils import convert_models_to_fp32
 from torch.cuda import amp
 
 from SO_Loss import pLoss_all_fidelity
-from SO_Graph import graph_SA_ffso
+from SO_Graph import graph_SA_ffso, graph_SO_FFSC
 
 def create_task_flags_CLIP(task):
     semantic_tasks_3lvls = {'binary': 1, 'global': 1, 'local': 1}
@@ -52,7 +52,12 @@ class AutoLambda_SO:
         self.train_tasks = train_tasks
         self.pri_tasks = pri_tasks
 
-        self.criterion = pLoss_all_fidelity(graph_SA_ffso(), dataset)
+        if dataset == 'so-ff':
+            self.criterion = pLoss_all_fidelity(graph_SA_ffso(), dataset)
+        elif dataset == 'ffsc':
+            self.criterion = pLoss_all_fidelity(hexG=graph_SO_FFSC(), dataset='ffsc')
+        else:
+            raise NotImplementedError
         print(dataset)
 
     def virtual_step(self, train_x, train_y, joint_texts, alpha, model_optim):
