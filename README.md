@@ -38,14 +38,22 @@ Follow the links below to download the datasets (🛡️ Copyright of the datase
 
 |      Model       |    Training Dataset   |                                                        Download                                                                | |
 |:----------------:|:----------------:|:-------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------:|
-| SJEDD | [FF++](https://github.com/ondyari/FaceForensics)  | [Google Drive](https://drive.google.com/file/d/1iXDzFrH4o3h4C7HA2jZRoxoxFr3G2Vly/view?usp=sharing) |✅|
+| SJEDD | [FF++](https://github.com/ondyari/FaceForensics)  | [Google Drive](https://drive.google.com/drive/folders/17Wqxlf7hWbdC3WRljXryDK3VPE0bFoTp?usp=sharing) |✅|
+| SJEDD | [FFSC](https://github.com/MZMMSEC/SO-DFD/tree/main)  | [Google Drive](https://drive.google.com/drive/folders/17Wqxlf7hWbdC3WRljXryDK3VPE0bFoTp?usp=sharing) |✅|
 
 After downloading these checkpoints, put them into the folder ``pretrained``.
 
 ### 3. Inference on the test sets
-
+**For FF++**
 ```
-CUDA_VISIBLE_DEVICES=5 python SJEDD_test.py --auc --test_log True --dataset [e.g., CDF, FSh, Deeper, DFDC, FFSC] --batch_size 1 --n_frames 64 --resume [path to checkpoints, e.g., ./pretrained/ckpt_best.pth]
+CUDA_VISIBLE_DEVICES=5 python SJEDD_test.py --auc --test_log True --dataset [e.g., CDF, FSh, Deeper, DFDC, FFSC] \
+--batch_size 1 --n_frames 64 --resume [path to checkpoints, e.g., ./pretrained/ckpt_best.pth]
+```
+**For FFSC**
+```
+CUDA_VISIBLE_DEVICES=5 python SJEDD_test.py --auc --test_log True --dataset Deeper --datapath /data0/mian2/DeeperForensics/ \
+--output ./output/test/SO_ViT/deeper/ --batch_size 1 --n_frames 32 --train_dataset ffsc \
+--resume [path to checkpoints, e.g., ./pretrained/ckpt_best_FFSC.pth]
 ```
 
 ### 4. Training (For reference)
